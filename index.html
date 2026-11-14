@@ -53,9 +53,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; -webkit-text-size-adjust: 100%; }
         html, body { width: 100%; max-width: 100%; overflow-x: hidden; background-color: var(--bg-color); color: var(--text-main); font-size: 13px; }
 
-        .ticker { background: #022c22; color: #a7f3d0; padding: 6px 10px; font-size: 11px; display: flex; justify-content: space-around; border-bottom: 1px solid var(--gold-accent); flex-wrap: wrap; gap: 4px; }
-        .ticker span b { color: #fbbf24; }
-
         header { background: var(--card-bg); padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }
         .brand { display: flex; align-items: center; gap: 8px; }
         .logo-icon { width: 36px; height: 36px; background: linear-gradient(145deg, #022c22, #064e3b); border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 2px solid #F59E0B; }
@@ -69,7 +66,40 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .spinning { animation: spin 1s linear infinite; }
 
-        /* شريط الأخبار العلوي المطور ليشمل كل اقتصاد سوريا */
+        /* تصميم الإشعار الزمردي والذهبي الفاخر */
+        #custom-toast {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%) translateY(120px);
+            background: linear-gradient(135deg, #022c22, #064e3b);
+            color: #f8fafc;
+            border: 2px solid var(--gold-accent);
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+            z-index: 9999;
+            text-align: center;
+            font-weight: 800;
+            font-size: 11.5px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+            opacity: 0;
+            pointer-events: none;
+            width: 90%;
+            max-width: 340px;
+        }
+        #custom-toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        #custom-toast span {
+            color: #fbbf24;
+            display: block;
+            font-size: 10px;
+            margin-top: 4px;
+            font-weight: 700;
+        }
+
         .news-ticker-wrap { background: var(--gold-bg); border-bottom: 1px solid var(--gold-accent); display: flex; align-items: center; overflow: hidden; height: 32px; }
         .news-label { background: var(--primary); color: #fff; font-weight: 900; font-size: 10px; padding: 0 8px; height: 100%; display: flex; align-items: center; white-space: nowrap; gap: 3px; }
         .news-marquee { width: 100%; overflow: hidden; white-space: nowrap; }
@@ -113,7 +143,6 @@
 
         .chart-box { position: relative; height: 160px; width: 100%; background: var(--card-bg); border-radius: 8px; padding: 8px; border: 1px solid var(--border); }
 
-        /* قسم الأخبار في نهاية الصفحة تماماً */
         .news-section-wrapper { margin-top: 25px; border-top: 2px dashed var(--border); padding-top: 15px; }
         .news-filters { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 8px; }
         .filter-btn { background: var(--card-bg); border: 1px solid var(--border); color: var(--text-muted); padding: 4px 10px; border-radius: 10px; font-weight: 800; font-size: 10px; white-space: nowrap; cursor: pointer; flex-shrink: 0; }
@@ -132,18 +161,14 @@
 </head>
 <body>
 
-    <!-- شريط عاجل علوي شامل ومتحرك لحظياً -->
+    <!-- عنصر الإشعار المنبثق الفاخر -->
+    <div id="custom-toast"></div>
+
     <div class="news-ticker-wrap">
         <div class="news-label">عاجل سورية</div>
         <div class="news-marquee">
-            <div class="news-text" id="news-ticker">🔴 عاجل سوريا: سعر صرف الدولار اللحظي قيد التحديث الآلي | ⛽ وزارة النفط والثروة المعدنية: استقرار حصص البنزين (90 و 95)، المازوت، والغاز المنزلي والتجاري | 🏦 مصرف سوريا المركزي يثبت نشرة الحوالات والتمويل | 📊 سوق دمشق للأوراق المالية تسجل نشاطاً في تداولات الأسهم | ⚡ وزارة الكهرباء تحدد شرائح الاستهلاك.</div>
+            <div class="news-text" id="news-ticker">🔴 عاجل سوريا: سعر صرف الدولار اللحظي قيد التحديث الآلي | ⛽ وزارة النفط والثروة المعدنية: استقرار حصص البنزين (90 و 95)، المازوت، والغاز المنزلي والتجاري | 🏦 مصرف سوريا المركزي يثبت نشرة الحوالات والتمويل | 📊 سوق دمشق للأوراق المالية تسجل نشاطاً في تداولات الأسهم.</div>
         </div>
-    </div>
-
-    <div class="ticker">
-        <span>بنزين 95: <b id="tick-b95">14,300 ل.س</b></span>
-        <span>مازوت: <b id="tick-mazut">13,500 ل.س</b></span>
-        <span>الغاز الحر: <b id="tick-gas">25,000 ل.س</b></span>
     </div>
 
     <header>
@@ -219,7 +244,6 @@
             </div>
         </div>
 
-        <!-- العملات الرقمية المفصلة بدقة -->
         <div class="section-title" style="color: var(--crypto);">🌐 أسواق العملات الرقمية (مفصلة لحظياً)</div>
         <div class="stack-list">
             <div class="card">
@@ -245,7 +269,6 @@
             </div>
         </div>
 
-        <!-- الحاسبات الشاملة -->
         <div class="section-title">🧮 حاسبة العملات وعدد الأوراق النقدية</div>
         <div class="stack-list">
             <div class="card">
@@ -300,7 +323,6 @@
             </table>
         </div>
 
-        <!-- 📰 قسم الأخبار والتحليلات المالية في نهاية الصفحة تماماً -->
         <div class="news-section-wrapper">
             <div class="section-title" style="color: var(--primary);">📰 المركز الإخباري والاقتصادي في سوريا</div>
             <div class="news-filters">
@@ -328,6 +350,16 @@
         let chartObj = null;
         let globalData = null;
 
+        // دالة إظهار الإشعار الفاخر باللون الزمردي والذهبي مع عبارة الشكر
+        function showCustomToast(message) {
+            const toast = document.getElementById('custom-toast');
+            toast.innerHTML = `✨ ${message}<span>شكراً لاستخدامك تطبيقنا 🤍</span>`;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
         async function fetchLiveRates() {
             const icon = document.getElementById('sync-icon');
             icon.classList.add('spinning');
@@ -337,19 +369,19 @@
                 render();
                 setTimeout(() => {
                     icon.classList.remove('spinning');
-                    alert("✅ تم تحديث الأسعار والبيانات بنجاح من الخوادم الحية!");
+                    showCustomToast("تم تحديث الأسعار والبيانات بنجاح!");
                 }, 500);
             } catch (e) {
                 console.error("خطأ في جلب البيانات الحية:", e);
                 icon.classList.remove('spinning');
-                alert("❌ تعذر الاتصال، تأكد من اتصال الإنترنت.");
+                showCustomToast("تعذر الاتصال، يرجى التحقق من الشبكة.");
             }
         }
 
         const newsList = [
             { cat: 'syria', tag: '🇸🇾 بورصة دمشق والأسواق المحلية', time: 'مباشر', head: 'سوق دمشق للأوراق المالية تسجل تداولات نشطة وسط إقبال على الأسهم المصرفية والخدمية', body: 'متابعة حثيثة لأداء الشركات المدرجة وإفصاحات البيانات المالية الفصلية.', impact: '📊 استقرار وتداولات إيجابية' },
             { cat: 'syria', tag: '🇸🇾 مصرف سوريا المركزي', time: 'رسمي', head: 'تثبيت نشرة الحوالات والتمويل وضبط إيقاع السوق الموازية للقطع الأجنبي', body: 'المصرف المركزي يواصل مراقبة قنوات صرف الحوالات الخارجية لتأمين تمويل المستوردات.', impact: '💵 دعم استقرار الصرف' },
-            { cat: 'fuel', tag: '⛽ وزارة النفط والثروة المعدنية', time: 'رسمي', head: 'استقرار توريدات المشتقات النفطية والغاز المنزلي وتوزيع حصص المحروقات عبر بطاقة التنظيم', body: 'متابعة ميدانية لتوزيع المحروقات (بنزين 90، بنزين 95، مازوت، غاز منزلي وتجاري) في كافة المحافظات السورية بالأسعار الرسمية والحرّة.', impact: '🔥 تأمين الاحتياجات الأساسية' },
+            { cat: 'fuel', tag: '⛽ وزارة النفط والثروة المعدنية', time: 'رسمي', head: 'استقرار توريدات المشتقات النفطية والغاز المنزلي وتوزيع حصص المحروقات عبر بطاقة التنظيم', body: 'متابعة ميدانية لتوزيع المحروقات (بنزين 90، بنزين 95، مازوت، غاز منزلي وتجاري) في كافة المحافظات السورية.', impact: '🔥 تأمين الاحتياجات الأساسية' },
             { cat: 'banks', tag: '🏦 المصارف وشركات التمويل', time: 'قطاع مصرفي', head: 'توسيع شبكة الدفع الإلكتروني وتسهيل تمويل التجارة البينية عبر المصارف العاملة', body: 'المصارف المحلية تتجه نحو تعزيز حلول التقنية المالية والتحويلات اللحظية.', impact: '💳 تسهيلات ائتمانية جديدة' },
             { cat: 'crypto', tag: '₿ أسواق العملات الرقمية', time: 'عالمي ومحلي', head: 'البيتكوين (BTC) والإيثيريوم (ETH) تسجلان تحركات قوية وسط اهتمام المستثمرين بالتحوط', body: 'منصات التداول الرقمية تسجل أحجام تداول عالية للعملات المستقرة (USDT).', impact: '⚡ سيولة مرتفعة' }
         ];
