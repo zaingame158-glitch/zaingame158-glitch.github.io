@@ -2,16 +2,21 @@ import json
 import datetime
 import urllib.request
 
-# جلب أسعار العملات الرقمية والأسواق العالمية الحية
-def fetch_global_data():
+def fetch_crypto_rates():
     try:
+        # جلب أسعار البيتكوين، الإيثيريوم، والتيثر الحية عالمياً من مصدر موثوق
         url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether&vs_currencies=usd"
         req = urllib.request.urlopen(url, timeout=10)
-        return json.loads(req.read().decode())
-    except:
+        data = json.loads(req.read().decode())
+        return data
+    except Exception as e:
+        print("خطأ في جلب العملات الرقمية:", e)
         return None
 
-# قراءة ملف rates.json الحالي أو إنشاء هيكل أساسي
+# جلب بيانات السوق الحية
+crypto_data = fetch_crypto_rates()
+
+# قراءة ملف rates.json الحالي أو إنشاءه إن لمשkن موجوداً
 try:
     with open('rates.json', 'r', encoding='utf-8') as f:
         rates = json.load(f)
@@ -26,12 +31,12 @@ except:
         }
     }
 
-# تحديث وقت التلقائي
+# تحديث وقت المزامنة السحابية تلقائياً
 current_time = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
 rates["last_update"] = current_time
 
-# حفظ التحديثات في ملف rates.json أوتوماتيكياً
+# حفظ التحديثات في ملف rates.json أوتوماتيكياً ليتزامن مع التطبيق
 with open('rates.json', 'w', encoding='utf-8') as f:
     json.dump(rates, f, ensure_ascii=False, indent=2)
 
-print("تم تحديث الأسعار أوتوماتيكياً بنجاح في:", current_time)
+print("تمت مزامنة وتحديث الأسعار بنجاح في:", current_time)
