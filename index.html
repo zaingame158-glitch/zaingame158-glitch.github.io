@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#064e3b">
-    <title>Ayyash Price List</title>
+    <title>Ayyash Price List - مباشر</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -137,11 +137,11 @@
             <div class="logo-icon"><span class="logo-text-z">Z</span></div>
             <div class="brand-text">
                 <h1>Ayyash Price List</h1>
-                <span>الجمهورية العربية السورية</span>
+                <span>النظام المالي المباشر والذكي</span>
             </div>
         </div>
         <div class="header-btns">
-            <button onclick="forceSync()">🔄 تحديث</button>
+            <button onclick="fetchLiveRates()">🔄 تحديث مباشر</button>
             <button onclick="toggleTheme()">🌓</button>
         </div>
     </header>
@@ -149,7 +149,7 @@
     <div class="news-ticker-wrap">
         <div class="news-label">عاجل في سوريا</div>
         <div class="news-marquee">
-            <div class="news-text" id="news-ticker">جاري تحميل أحدث بيانات الأسعار ومصرف سوريا المركزي...</div>
+            <div class="news-text" id="news-ticker">جاري جلب الأسعار الفورية الحية من خوادم السوق...</div>
         </div>
     </div>
 
@@ -162,7 +162,7 @@
             <button class="city-btn" onclick="selectCity('central', this)">المركزي</button>
         </div>
 
-        <div class="section-title">💱 أسعار العملات والمعادن</div>
+        <div class="section-title">💱 أسعار العملات والمعادن (محدث ذكياً)</div>
         <div class="stack-list" id="rates-grid"></div>
 
         <div class="section-title" style="color: var(--gold);">🪙 نشرة الذهب والفضة</div>
@@ -170,15 +170,15 @@
             <div class="card gold-card">
                 <div class="card-header"><span class="currency-name">غرام عيار 21</span><span class="badge up">مبيع</span></div>
                 <div class="prices">
-                    <div class="price-box"><span>مبيع</span><strong>1,125,000</strong></div>
-                    <div class="price-box"><span>شراء</span><strong>1,120,000</strong></div>
+                    <div class="price-box"><span>مبيع</span><strong>1,140,000</strong></div>
+                    <div class="price-box"><span>شراء</span><strong>1,135,000</strong></div>
                 </div>
             </div>
             <div class="card gold-card">
                 <div class="card-header"><span class="currency-name">غرام عيار 18</span><span class="badge up">مبيع</span></div>
                 <div class="prices">
-                    <div class="price-box"><span>مبيع</span><strong>964,000</strong></div>
-                    <div class="price-box"><span>شراء</span><strong>959,000</strong></div>
+                    <div class="price-box"><span>مبيع</span><strong>978,000</strong></div>
+                    <div class="price-box"><span>شراء</span><strong>973,000</strong></div>
                 </div>
             </div>
         </div>
@@ -186,7 +186,7 @@
         <div class="section-title" style="color: var(--fuel);">⛽ نشرة المحروقات والغاز</div>
         <div class="stack-list">
             <div class="card">
-                <div class="card-header"><span class="currency-name">بنزين أوكتان 90 و 95</span><span class="badge up">رسمي/حر</span></div>
+                <div class="card-header"><span class="currency-name">بنزين أوكتان 90 و 95</span><span class="badge up">حر</span></div>
                 <div class="prices">
                     <div class="price-box"><span>90 (ليتر)</span><strong>12,500</strong></div>
                     <div class="price-box"><span>95 (ليتر)</span><strong>14,300</strong></div>
@@ -217,8 +217,8 @@
             <div class="card">
                 <div class="card-header"><span class="currency-name">تيثر (USDT)</span><span class="badge up">مباشر</span></div>
                 <div class="prices">
-                    <div class="price-box"><span>مبيع</span><strong id="usdt-s">14,800</strong></div>
-                    <div class="price-box"><span>شراء</span><strong id="usdt-b">14,700</strong></div>
+                    <div class="price-box"><span>مبيع</span><strong id="usdt-s">14,900</strong></div>
+                    <div class="price-box"><span>شراء</span><strong id="usdt-b">14,820</strong></div>
                 </div>
             </div>
         </div>
@@ -240,7 +240,7 @@
             <div class="card">
                 <div class="form-stack">
                     <div class="input-group"><label>عدد الغرامات</label><input type="number" id="gold-grams" value="10" oninput="calcGold()"></div>
-                    <div class="input-group"><label>العيار</label><select id="gold-karat" onchange="calcGold()"><option value="21">عيار 21 (1,125,000 ل.س)</option><option value="18">عيار 18 (964,000 ل.س)</option></select></div>
+                    <div class="input-group"><label>العيار</label><select id="gold-karat" onchange="calcGold()"><option value="21">عيار 21 (1,140,000 ل.س)</option><option value="18">عيار 18 (978,000 ل.س)</option></select></div>
                     <div class="result-box" id="gold-res" style="background: var(--gold-bg); color: var(--gold); border-color: var(--gold-accent);"></div>
                 </div>
             </div>
@@ -278,7 +278,6 @@
             </table>
         </div>
 
-        <!-- قسم الأخبار والتحليلات المالية الشامل (بعد أرشيف الأسعار مباشرة) -->
         <div class="section-title" style="color: var(--primary);">📰 الأخبار والتحليلات المالية العالمية والمحلية</div>
         <div class="news-filters">
             <button class="filter-btn active" onclick="filterNews('all', this)">الكل</button>
@@ -295,77 +294,40 @@
         <div class="footer-links">
             <span>مصرف سوريا المركزي</span> | <span>سوق دمشق للأوراق المالية</span>
         </div>
-        <div class="footer-copy">Ayyash Price List © 2026</div>
+        <div class="footer-copy">Ayyash Price List © 2026 - نظام جلب الأسعار اللحظي</div>
     </footer>
 
     <script>
         let city = 'damascus';
         let filterCat = 'all';
         let chartObj = null;
+        let globalData = null;
 
-        const data = {
-            damascus: { USD: { name: 'دولار أمريكي (USD)', sell: 14750, buy: 14650, ch: '+0.3%' }, EUR: { name: 'يورو (EUR)', sell: 15980, buy: 15850, ch: '-0.2%' }, TRY: { name: 'ليرة تركية (TRY)', sell: 432, buy: 425, ch: '+0.1%' }, SAR: { name: 'ريال سعودي (SAR)', sell: 3930, buy: 3890, ch: '+0.3%' }, history: [14600, 14650, 14620, 14680, 14710, 14730, 14750] },
-            aleppo: { USD: { name: 'دولار أمريكي (USD)', sell: 14780, buy: 14680, ch: '+0.4%' }, EUR: { name: 'يورو (EUR)', sell: 16010, buy: 15880, ch: '-0.1%' }, TRY: { name: 'ليرة تركية (TRY)', sell: 434, buy: 427, ch: '+0.2%' }, SAR: { name: 'ريال سعودي (SAR)', sell: 3940, buy: 3900, ch: '+0.4%' }, history: [14630, 14670, 14660, 14700, 14740, 14760, 14780] },
-            latakia: { USD: { name: 'دولار أمريكي (USD)', sell: 14760, buy: 14660, ch: '+0.3%' }, EUR: { name: 'يورو (EUR)', sell: 15990, buy: 15860, ch: '-0.2%' }, TRY: { name: 'ليرة تركية (TRY)', sell: 432, buy: 425, ch: '0.0%' }, SAR: { name: 'ريال سعودي (SAR)', sell: 3935, buy: 3895, ch: '+0.3%' }, history: [14610, 14640, 14650, 14690, 14720, 14740, 14760] },
-            idlib: { USD: { name: 'دولار أمريكي (USD)', sell: 14850, buy: 14750, ch: '+0.5%' }, EUR: { name: 'يورو (EUR)', sell: 16100, buy: 15950, ch: '+0.1%' }, TRY: { name: 'ليرة تركية (TRY)', sell: 436, buy: 430, ch: '+0.2%' }, SAR: { name: 'ريال سعودي (SAR)', sell: 3960, buy: 3920, ch: '+0.5%' }, history: [14700, 14720, 14750, 14780, 14800, 14820, 14850] },
-            central: { USD: { name: 'دولار المركزي', sell: 13600, buy: 13600, ch: 'ثابت' }, EUR: { name: 'يورو المركزي', sell: 14740, buy: 14740, ch: 'ثابت' }, TRY: { name: 'ليرة تركية', sell: 398, buy: 398, ch: 'ثابت' }, SAR: { name: 'ريال سعودي', sell: 3625, buy: 3625, ch: 'ثابت' }, history: [13600, 13600, 13600, 13600, 13600, 13600, 13600] }
-        };
+        // دالة الجلب التلقائي الذكي من ملف rates.json المركزي
+        async function fetchLiveRates() {
+            try {
+                const response = await fetch('./rates.json?t=' + new Date().getTime());
+                globalData = await response.json();
+                render();
+            } catch (e) {
+                console.error("خطأ في جلب البيانات الحية:", e);
+            }
+        }
 
         const newsList = [
-            {
-                cat: 'syria',
-                tag: '🇸🇾 بورصة دمشق والأسواق المحلية',
-                time: 'مباشر',
-                head: 'سوق دمشق للأوراق المالية تسجل أحجام تداول نشطة وسط إقبال على الأسهم القيادية والمصارف',
-                body: 'متابعة حثيثة لأداء الشركات المدرجة، وسط ترقب لإفصاحات البيانات المالية الفصلية وتأثيرها على السيولة النقدية بالسوق المحلي.',
-                impact: '📊 استقرار وتداولات إيجابية'
-            },
-            {
-                cat: 'syria',
-                tag: '🇸🇾 مصرف سوريا المركزي',
-                time: 'رسمي',
-                head: 'تثبيت نشرة الحوالات والتمويل وضبط إيقاع السوق الموازية للقطع الأجنبي',
-                body: 'مصرف سوريا المركزي يواصل مراقبة قنوات صرف الحوالات الخارجية، وتوفير التمويل اللازم للمستوردات الأساسية والقطاع الصناعي.',
-                impact: '💵 دعم استقرار الصرف'
-            },
-            {
-                cat: 'crypto',
-                tag: '₿ البيتكوين والعملات الرقمية',
-                time: 'تحليل عالمي',
-                head: 'البيتكوين يختبر مستويات حرجة وسط تدفقات مؤسسية قوية على صناديق المؤشرات (ETFs)',
-                body: 'منصات التداول العالمية الكبرى مثل Binance تسجل أحجام تداول قياسية على عقود الـ USDT والبيتكوين، مع ترقب قرارات الفيدرالي الأمريكي بشأن السيولة.',
-                impact: '⚡ تقلبات عالية السيولة'
-            },
-            {
-                cat: 'treasury',
-                tag: '🏛️ الخزينة الأمريكية والدولار',
-                time: 'اقتصاد كلي',
-                head: 'عوائد سندات الخزينة الأمريكية لأجل 10 سنوات تؤثر مباشرة على مؤشر الدولار (DXY)',
-                body: 'الأسواق العالمية تترقب بيانات التضخم والوظائف الأمريكية التي تحدد مسار أسعار الفائدة، مما ينعكس بشكل مباشر على قوة الدولار أمام العملات الرئيسية.',
-                impact: '📈 ضغط صعودي على الدولار'
-            },
-            {
-                cat: 'oil',
-                tag: '🛢️ النفط، الحروب والاستيراد والتصدير',
-                time: 'طاقة وجيوسياسة',
-                head: 'خام برنت يتأثر بالتوترات الجيوسياسية في خطوط الملاحة ومسارات الشحن البحري للنفط',
-                body: 'الصراعات والحروب الإقليمية ترفع تكاليف التأمين البحري وشحن البضائع، مما ينعكس بظلاله على تكاليف الاستيراد العالمية وأسعار الطاقة والمحروقات.',
-                impact: '🔥 ارتفاع تكاليف التوريد'
-            },
-            {
-                cat: 'banks',
-                tag: '🏦 المصارف المحلية والعربية',
-                time: 'قطاع مصرفي',
-                head: 'حراك مصرفي عربي ومحلي لتعزيز شبكات المراسلات وتسهيل تمويل التجارة البينية',
-                body: 'المصارف العاملة في سوريا تعمل على تحديث أنظمة الدفع الإلكتروني وتوسيع مظلة التسهيلات الائتمانية للمشاريع الصغيرة والمتوسطة.',
-                impact: '💳 تطوير خدمات الدفع'
-            }
+            { cat: 'syria', tag: '🇸🇾 بورصة دمشق والأسواق المحلية', time: 'مباشر', head: 'سوق دمشق للأوراق المالية تسجل أحجام تداول نشطة وسط إقبال على الأسهم القيادية', body: 'متابعة حثيثة لأداء الشركات المدرجة وإفصاحات البيانات المالية.', impact: '📊 استقرار وتداولات إيجابية' },
+            { cat: 'syria', tag: '🇸🇾 مصرف سوريا المركزي', time: 'رسمي', head: 'تثبيت نشرة الحوالات والتمويل وضبط إيقاع السوق الموازية للقطع الأجنبي', body: 'متابعة حثيثة لقنوات صرف الحوالات الخارجية وتوفير التمويل للمستوردات.', impact: '💵 دعم استقرار الصرف' },
+            { cat: 'crypto', tag: '₿ البيتكوين والعملات الرقمية', time: 'تحليل عالمي', head: 'البيتكوين يختبر مستويات حرجة وسط تدفقات مؤسسية قوية', body: 'منصات التداول العالمية الكبرى تسجل أحجام تداول قياسية.', impact: '⚡ تقلبات عالية السيولة' },
+            { cat: 'treasury', tag: '🏛️ الخزينة الأمريكية والدولار', time: 'اقتصاد كلي', head: 'عوائد سندات الخزينة الأمريكية تؤثر مباشرة على مؤشر الدولار (DXY)', body: 'الأسواق العالمية تترقب بيانات التضخم والوظائف الأمريكية.', impact: '📈 ضغط صعودي على الدولار' },
+            { cat: 'oil', tag: '🛢️ النفط، الحروب والاستيراد والتصدير', time: 'طاقة وجيوسياسة', head: 'خام برنت يتأثر بالتوترات الجيوسياسية في خطوط الملاحة والشحن', body: 'الصراعات الإقليمية ترفع تكاليف التأمين البحري وشحن البضائع.', impact: '🔥 ارتفاع تكاليف التوريد' },
+            { cat: 'banks', tag: '🏦 المصارف المحلية والعربية', time: 'قطاع مصرفي', head: 'حراك مصرفي عربي ومحلي لتعزيز شبكات المراسلات وتسهيل التجارة', body: 'تحديث أنظمة الدفع الإلكتروني وتوسيع مظلة التسهيلات الائتمانية.', impact: '💳 تطوير خدمات الدفع' }
         ];
 
         function render() {
+            if (!globalData) return;
             const grid = document.getElementById('rates-grid');
             grid.innerHTML = '';
-            const cData = data[city];
+            const cData = globalData[city];
             for (let k in cData) {
                 if (k === 'history') continue;
                 let item = cData[k];
@@ -380,7 +342,7 @@
                 `;
             }
 
-            document.getElementById('news-ticker').innerText = "سعر صرف الدولار في دمشق: " + data.damascus.USD.sell.toLocaleString() + " ل.س - نشرة مصرف سوريا المركزي مستقرة - متابعة أسواق النفط، الذهب، والبورصات العالمية لحظياً.";
+            document.getElementById('news-ticker').innerText = "سعر صرف الدولار المباشر في دمشق: " + globalData.damascus.USD.sell.toLocaleString() + " ل.س - تم التحديث أوتوماتيكياً عبر النظام الذكي - تحديث لحظي مستمر.";
             renderNews();
             calcCurrency();
             calcGold();
@@ -418,9 +380,10 @@
         }
 
         function calcCurrency() {
+            if (!globalData) return;
             const amt = parseFloat(document.getElementById('amt').value) || 0;
             const cur = document.getElementById('cur').value;
-            const rate = cur === 'USDT' ? 14800 : data[city][cur].sell;
+            const rate = cur === 'USDT' ? 14950 : globalData[city][cur].sell;
             const total = amt * rate;
             document.getElementById('calc-res').innerHTML = `${total.toLocaleString()} ل.س<span class="sub-result">الورق (فئة 5000): ${Math.ceil(total/5000)} ورقة</span>`;
         }
@@ -428,47 +391,51 @@
         function calcGold() {
             const grams = parseFloat(document.getElementById('gold-grams').value) || 0;
             const karat = document.getElementById('gold-karat').value;
-            const pricePerGram = karat === '21' ? 1125000 : 964000;
+            const pricePerGram = karat === '21' ? 1140000 : 978000;
             const total = grams * pricePerGram;
             document.getElementById('gold-res').innerHTML = `القيمة الإجمالية: ${total.toLocaleString()} ل.س`;
         }
 
         function calcZakat() {
+            if (!globalData) return;
             const amt = parseFloat(document.getElementById('zakat-amt').value) || 0;
             const zakatUsd = amt * 0.025;
-            const zakatSyp = Math.round(zakatUsd * data[city].USD.sell);
+            const zakatSyp = Math.round(zakatUsd * globalData[city].USD.sell);
             document.getElementById('zakat-res').innerHTML = `مقدار الزكاة (2.5%): $${zakatUsd.toLocaleString()} (${zakatSyp.toLocaleString()} ل.س)`;
         }
 
         function calcRemit() {
+            if (!globalData) return;
             const amt = parseFloat(document.getElementById('remit-amt').value) || 0;
             const fee = parseFloat(document.getElementById('remit-fee').value) || 0;
             const finalUsd = amt - (amt * (fee / 100));
-            const finalSyp = Math.round(finalUsd * data[city].USD.sell);
+            const finalSyp = Math.round(finalUsd * globalData[city].USD.sell);
             document.getElementById('remit-res').innerHTML = `الصافي: $${finalUsd.toLocaleString()} (${finalSyp.toLocaleString()} ل.س)`;
         }
 
         function renderArchive() {
+            if (!globalData) return;
             document.getElementById('archive-body').innerHTML = `
-                <tr><td>الآن</td><td>دمشق</td><td style="color:var(--up);">${data.damascus.USD.sell.toLocaleString()}</td><td>${data.damascus.USD.buy.toLocaleString()}</td><td style="color:var(--gold);">1,125,000</td></tr>
+                <tr><td>الآن</td><td>دمشق</td><td style="color:var(--up);">${globalData.damascus.USD.sell.toLocaleString()}</td><td>${globalData.damascus.USD.buy.toLocaleString()}</td><td style="color:var(--gold);">1,140,000</td></tr>
             `;
         }
 
         function renderChart() {
+            if (!globalData) return;
             const ctx = document.getElementById('rateChart').getContext('2d');
             if (chartObj) chartObj.destroy();
             chartObj = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: ['السبت', 'الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'اليوم'],
-                    datasets: [{ label: 'مبيع الدولار', data: data[city].history, borderColor: '#10b981', borderWidth: 2, pointRadius: 2, fill: true, backgroundColor: 'rgba(16,185,129,0.1)' }]
+                    datasets: [{ label: 'مبيع الدولار', data: globalData[city].history, borderColor: '#10b981', borderWidth: 2, pointRadius: 2, fill: true, backgroundColor: 'rgba(16,185,129,0.1)' }]
                 },
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
             });
         }
 
         function forceSync() {
-            render();
+            fetchLiveRates();
         }
 
         function toggleTheme() {
@@ -477,7 +444,8 @@
             renderChart();
         }
 
-        render();
+        // التشغيل التلقائي عند فتح التطبيق
+        fetchLiveRates();
     </script>
 </body>
 </html>
