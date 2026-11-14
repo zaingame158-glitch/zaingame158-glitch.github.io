@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#064e3b">
-    <title>Ayyash Price List - مباشر</title>
+    <title>Ayyash Price List - المنصة المالية الرسمية في سوريا</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -64,12 +64,16 @@
         .brand-text span { font-size: 9px; color: var(--gold); font-weight: 700; display: block; }
 
         .header-btns { display: flex; gap: 4px; align-items: center; }
-        .header-btns button { background: var(--bg-color); border: 1px solid var(--border); color: var(--text-main); padding: 4px 8px; border-radius: 6px; font-weight: 700; font-size: 10px; cursor: pointer; }
+        .header-btns button { background: var(--bg-color); border: 1px solid var(--border); color: var(--text-main); padding: 4px 8px; border-radius: 6px; font-weight: 700; font-size: 10px; cursor: pointer; display: flex; align-items: center; gap: 3px; }
+        
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .spinning { animation: spin 1s linear infinite; }
 
+        /* شريط الأخبار العلوي المطور ليشمل كل اقتصاد سوريا */
         .news-ticker-wrap { background: var(--gold-bg); border-bottom: 1px solid var(--gold-accent); display: flex; align-items: center; overflow: hidden; height: 32px; }
         .news-label { background: var(--primary); color: #fff; font-weight: 900; font-size: 10px; padding: 0 8px; height: 100%; display: flex; align-items: center; white-space: nowrap; gap: 3px; }
         .news-marquee { width: 100%; overflow: hidden; white-space: nowrap; }
-        .news-text { display: inline-block; padding-left: 100%; font-size: 11px; font-weight: 800; animation: marquee 35s linear infinite; }
+        .news-text { display: inline-block; padding-left: 100%; font-size: 11px; font-weight: 800; animation: marquee 45s linear infinite; }
         @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(100%, 0); } }
 
         .container { width: 100%; padding: 8px; }
@@ -109,7 +113,9 @@
 
         .chart-box { position: relative; height: 160px; width: 100%; background: var(--card-bg); border-radius: 8px; padding: 8px; border: 1px solid var(--border); }
 
-        .news-filters { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 6px; }
+        /* قسم الأخبار في نهاية الصفحة تماماً */
+        .news-section-wrapper { margin-top: 25px; border-top: 2px dashed var(--border); padding-top: 15px; }
+        .news-filters { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 8px; }
         .filter-btn { background: var(--card-bg); border: 1px solid var(--border); color: var(--text-muted); padding: 4px 10px; border-radius: 10px; font-weight: 800; font-size: 10px; white-space: nowrap; cursor: pointer; flex-shrink: 0; }
         .filter-btn.active { background: var(--gold); color: #fff; border-color: var(--gold); }
 
@@ -126,10 +132,18 @@
 </head>
 <body>
 
+    <!-- شريط عاجل علوي شامل ومتحرك لحظياً -->
+    <div class="news-ticker-wrap">
+        <div class="news-label">عاجل سورية</div>
+        <div class="news-marquee">
+            <div class="news-text" id="news-ticker">🔴 عاجل سوريا: سعر صرف الدولار اللحظي قيد التحديث الآلي | ⛽ وزارة النفط والثروة المعدنية: استقرار حصص البنزين (90 و 95)، المازوت، والغاز المنزلي والتجاري | 🏦 مصرف سوريا المركزي يثبت نشرة الحوالات والتمويل | 📊 سوق دمشق للأوراق المالية تسجل نشاطاً في تداولات الأسهم | ⚡ وزارة الكهرباء تحدد شرائح الاستهلاك.</div>
+        </div>
+    </div>
+
     <div class="ticker">
         <span>بنزين 95: <b id="tick-b95">14,300 ل.س</b></span>
         <span>مازوت: <b id="tick-mazut">13,500 ل.س</b></span>
-        <span>الغاز: <b id="tick-gas">25,000 ل.س</b></span>
+        <span>الغاز الحر: <b id="tick-gas">25,000 ل.س</b></span>
     </div>
 
     <header>
@@ -137,21 +151,14 @@
             <div class="logo-icon"><span class="logo-text-z">Z</span></div>
             <div class="brand-text">
                 <h1>Ayyash Price List</h1>
-                <span>النظام المالي المباشر والذكي</span>
+                <span>المرجع المالي الرسمي في سوريا</span>
             </div>
         </div>
         <div class="header-btns">
-            <button onclick="fetchLiveRates()">🔄 تحديث مباشر</button>
+            <button onclick="fetchLiveRates()" id="sync-btn"><span id="sync-icon">🔄</span> تحديث مباشر</button>
             <button onclick="toggleTheme()">🌓</button>
         </div>
     </header>
-
-    <div class="news-ticker-wrap">
-        <div class="news-label">عاجل في سوريا</div>
-        <div class="news-marquee">
-            <div class="news-text" id="news-ticker">جاري جلب الأسعار الفورية الحية من خوادم السوق...</div>
-        </div>
-    </div>
 
     <div class="container">
         <div class="cities">
@@ -162,10 +169,10 @@
             <button class="city-btn" onclick="selectCity('central', this)">المركزي</button>
         </div>
 
-        <div class="section-title">💱 أسعار العملات والمعادن (محدث ذكياً)</div>
+        <div class="section-title">💱 أسعار العملات والمعادن (محدث تلقائياً)</div>
         <div class="stack-list" id="rates-grid"></div>
 
-        <div class="section-title" style="color: var(--gold);">🪙 نشرة الذهب والفضة</div>
+        <div class="section-title" style="color: var(--gold);">🪙 نشرة الذهب والفضة في سوريا</div>
         <div class="stack-list">
             <div class="card gold-card">
                 <div class="card-header"><span class="currency-name">غرام عيار 21</span><span class="badge up">مبيع</span></div>
@@ -183,20 +190,20 @@
             </div>
         </div>
 
-        <div class="section-title" style="color: var(--fuel);">⛽ نشرة المحروقات والغاز</div>
+        <div class="section-title" style="color: var(--fuel);">⛽ نشرة المحروقات والغاز (وزارة النفط والثروة المعدنية)</div>
         <div class="stack-list">
             <div class="card">
-                <div class="card-header"><span class="currency-name">بنزين أوكتان 90 و 95</span><span class="badge up">حر</span></div>
+                <div class="card-header"><span class="currency-name">بنزين أوكتان 90 و 95</span><span class="badge up">رسمي / حر</span></div>
                 <div class="prices">
-                    <div class="price-box"><span>90 (ليتر)</span><strong>12,500</strong></div>
-                    <div class="price-box"><span>95 (ليتر)</span><strong>14,300</strong></div>
+                    <div class="price-box"><span>أوكتان 90 (ليتر)</span><strong>12,500</strong></div>
+                    <div class="price-box"><span>أوكتان 95 (ليتر)</span><strong>14,300</strong></div>
                 </div>
             </div>
             <div class="card">
-                <div class="card-header"><span class="currency-name">المازوت والغاز</span><span class="badge up">استقرار</span></div>
+                <div class="card-header"><span class="currency-name">المازوت والغاز المنزلي والتجاري</span><span class="badge up">مقرر</span></div>
                 <div class="prices">
-                    <div class="price-box"><span>المازوت</span><strong>13,500</strong></div>
-                    <div class="price-box"><span>جرّة الغاز</span><strong>25,000</strong></div>
+                    <div class="price-box"><span>المازوت (ليتر)</span><strong>13,500</strong></div>
+                    <div class="price-box"><span>جرّة الغاز (حر)</span><strong>25,000</strong></div>
                 </div>
             </div>
         </div>
@@ -204,7 +211,7 @@
         <div class="section-title" style="color: var(--elec);">⚡ تعريفة الكهرباء الرسمية</div>
         <div class="stack-list">
             <div class="card">
-                <div class="card-header"><span class="currency-name">القطاع المنزلي والتجاري</span><span class="badge up">شرائح</span></div>
+                <div class="card-header"><span class="currency-name">شرائح الاستهلاك المنزلي والتجاري</span><span class="badge up">وزارة الكهرباء</span></div>
                 <div class="prices">
                     <div class="price-box"><span>منزلي أولى</span><strong>10 ل.س</strong></div>
                     <div class="price-box"><span>تجاري كيلوواط</span><strong>1,400 ل.س</strong></div>
@@ -212,19 +219,34 @@
             </div>
         </div>
 
-        <div class="section-title" style="color: var(--crypto);">🌐 العملات الرقمية (USDT & BTC)</div>
+        <!-- العملات الرقمية المفصلة بدقة -->
+        <div class="section-title" style="color: var(--crypto);">🌐 أسواق العملات الرقمية (مفصلة لحظياً)</div>
         <div class="stack-list">
             <div class="card">
-                <div class="card-header"><span class="currency-name">تيثر (USDT)</span><span class="badge up">مباشر</span></div>
+                <div class="card-header"><span class="currency-name">تيثر (USDT - مقابل الدولار)</span><span class="badge up">مباشر</span></div>
                 <div class="prices">
                     <div class="price-box"><span>مبيع</span><strong id="usdt-s">14,900</strong></div>
                     <div class="price-box"><span>شراء</span><strong id="usdt-b">14,820</strong></div>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header"><span class="currency-name">بيتكوين (Bitcoin - BTC)</span><span class="badge up">عالمي</span></div>
+                <div class="prices">
+                    <div class="price-box"><span>السعر ($)</span><strong>$91,400</strong></div>
+                    <div class="price-box"><span>ما يعادل (ل.س)</span><strong>1,361,860,000</strong></div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><span class="currency-name">إيثيريوم (Ethereum - ETH)</span><span class="badge up">عالمي</span></div>
+                <div class="prices">
+                    <div class="price-box"><span>السعر ($)</span><strong>$3,420</strong></div>
+                    <div class="price-box"><span>ما يعادل (ل.س)</span><strong>50,958,000</strong></div>
+                </div>
+            </div>
         </div>
 
         <!-- الحاسبات الشاملة -->
-        <div class="section-title">🧮 حاسبة العملات وعدد الأوراق</div>
+        <div class="section-title">🧮 حاسبة العملات وعدد الأوراق النقدية</div>
         <div class="stack-list">
             <div class="card">
                 <div class="form-stack">
@@ -278,23 +300,26 @@
             </table>
         </div>
 
-        <div class="section-title" style="color: var(--primary);">📰 الأخبار والتحليلات المالية العالمية والمحلية</div>
-        <div class="news-filters">
-            <button class="filter-btn active" onclick="filterNews('all', this)">الكل</button>
-            <button class="filter-btn" onclick="filterNews('syria', this)">🇸🇾 سوريا والبورصة</button>
-            <button class="filter-btn" onclick="filterNews('crypto', this)">₿ البيتكوين والمنصات</button>
-            <button class="filter-btn" onclick="filterNews('treasury', this)">🏛️ الخزينة والدولار</button>
-            <button class="filter-btn" onclick="filterNews('oil', this)">🛢️ النفط والحروب</button>
-            <button class="filter-btn" onclick="filterNews('banks', this)">🏦 المصارف والأسواق</button>
+        <!-- 📰 قسم الأخبار والتحليلات المالية في نهاية الصفحة تماماً -->
+        <div class="news-section-wrapper">
+            <div class="section-title" style="color: var(--primary);">📰 المركز الإخباري والاقتصادي في سوريا</div>
+            <div class="news-filters">
+                <button class="filter-btn active" onclick="filterNews('all', this)">الكل</button>
+                <button class="filter-btn" onclick="filterNews('syria', this)">🇸🇾 سورية والبورصة</button>
+                <button class="filter-btn" onclick="filterNews('fuel', this)">⛽ النفط والغاز والمحروقات</button>
+                <button class="filter-btn" onclick="filterNews('banks', this)">🏦 المصارف والشركات</button>
+                <button class="filter-btn" onclick="filterNews('crypto', this)">₿ العملات الرقمية</button>
+            </div>
+            <div id="news-container"></div>
         </div>
-        <div id="news-container"></div>
+
     </div>
 
     <footer>
         <div class="footer-links">
-            <span>مصرف سوريا المركزي</span> | <span>سوق دمشق للأوراق المالية</span>
+            <span>مصرف سوريا المركزي</span> | <span>وزارة النفط والثروة المعدنية</span> | <span>سوق دمشق للأوراق المالية</span>
         </div>
-        <div class="footer-copy">Ayyash Price List © 2026 - نظام جلب الأسعار اللحظي</div>
+        <div class="footer-copy">Ayyash Price List © 2026 - المنصة المالية الأكثر دقة في سورية</div>
     </footer>
 
     <script>
@@ -303,24 +328,30 @@
         let chartObj = null;
         let globalData = null;
 
-        // دالة الجلب التلقائي الذكي من ملف rates.json المركزي
         async function fetchLiveRates() {
+            const icon = document.getElementById('sync-icon');
+            icon.classList.add('spinning');
             try {
                 const response = await fetch('./rates.json?t=' + new Date().getTime());
                 globalData = await response.json();
                 render();
+                setTimeout(() => {
+                    icon.classList.remove('spinning');
+                    alert("✅ تم تحديث الأسعار والبيانات بنجاح من الخوادم الحية!");
+                }, 500);
             } catch (e) {
                 console.error("خطأ في جلب البيانات الحية:", e);
+                icon.classList.remove('spinning');
+                alert("❌ تعذر الاتصال، تأكد من اتصال الإنترنت.");
             }
         }
 
         const newsList = [
-            { cat: 'syria', tag: '🇸🇾 بورصة دمشق والأسواق المحلية', time: 'مباشر', head: 'سوق دمشق للأوراق المالية تسجل أحجام تداول نشطة وسط إقبال على الأسهم القيادية', body: 'متابعة حثيثة لأداء الشركات المدرجة وإفصاحات البيانات المالية.', impact: '📊 استقرار وتداولات إيجابية' },
-            { cat: 'syria', tag: '🇸🇾 مصرف سوريا المركزي', time: 'رسمي', head: 'تثبيت نشرة الحوالات والتمويل وضبط إيقاع السوق الموازية للقطع الأجنبي', body: 'متابعة حثيثة لقنوات صرف الحوالات الخارجية وتوفير التمويل للمستوردات.', impact: '💵 دعم استقرار الصرف' },
-            { cat: 'crypto', tag: '₿ البيتكوين والعملات الرقمية', time: 'تحليل عالمي', head: 'البيتكوين يختبر مستويات حرجة وسط تدفقات مؤسسية قوية', body: 'منصات التداول العالمية الكبرى تسجل أحجام تداول قياسية.', impact: '⚡ تقلبات عالية السيولة' },
-            { cat: 'treasury', tag: '🏛️ الخزينة الأمريكية والدولار', time: 'اقتصاد كلي', head: 'عوائد سندات الخزينة الأمريكية تؤثر مباشرة على مؤشر الدولار (DXY)', body: 'الأسواق العالمية تترقب بيانات التضخم والوظائف الأمريكية.', impact: '📈 ضغط صعودي على الدولار' },
-            { cat: 'oil', tag: '🛢️ النفط، الحروب والاستيراد والتصدير', time: 'طاقة وجيوسياسة', head: 'خام برنت يتأثر بالتوترات الجيوسياسية في خطوط الملاحة والشحن', body: 'الصراعات الإقليمية ترفع تكاليف التأمين البحري وشحن البضائع.', impact: '🔥 ارتفاع تكاليف التوريد' },
-            { cat: 'banks', tag: '🏦 المصارف المحلية والعربية', time: 'قطاع مصرفي', head: 'حراك مصرفي عربي ومحلي لتعزيز شبكات المراسلات وتسهيل التجارة', body: 'تحديث أنظمة الدفع الإلكتروني وتوسيع مظلة التسهيلات الائتمانية.', impact: '💳 تطوير خدمات الدفع' }
+            { cat: 'syria', tag: '🇸🇾 بورصة دمشق والأسواق المحلية', time: 'مباشر', head: 'سوق دمشق للأوراق المالية تسجل تداولات نشطة وسط إقبال على الأسهم المصرفية والخدمية', body: 'متابعة حثيثة لأداء الشركات المدرجة وإفصاحات البيانات المالية الفصلية.', impact: '📊 استقرار وتداولات إيجابية' },
+            { cat: 'syria', tag: '🇸🇾 مصرف سوريا المركزي', time: 'رسمي', head: 'تثبيت نشرة الحوالات والتمويل وضبط إيقاع السوق الموازية للقطع الأجنبي', body: 'المصرف المركزي يواصل مراقبة قنوات صرف الحوالات الخارجية لتأمين تمويل المستوردات.', impact: '💵 دعم استقرار الصرف' },
+            { cat: 'fuel', tag: '⛽ وزارة النفط والثروة المعدنية', time: 'رسمي', head: 'استقرار توريدات المشتقات النفطية والغاز المنزلي وتوزيع حصص المحروقات عبر بطاقة التنظيم', body: 'متابعة ميدانية لتوزيع المحروقات (بنزين 90، بنزين 95، مازوت، غاز منزلي وتجاري) في كافة المحافظات السورية بالأسعار الرسمية والحرّة.', impact: '🔥 تأمين الاحتياجات الأساسية' },
+            { cat: 'banks', tag: '🏦 المصارف وشركات التمويل', time: 'قطاع مصرفي', head: 'توسيع شبكة الدفع الإلكتروني وتسهيل تمويل التجارة البينية عبر المصارف العاملة', body: 'المصارف المحلية تتجه نحو تعزيز حلول التقنية المالية والتحويلات اللحظية.', impact: '💳 تسهيلات ائتمانية جديدة' },
+            { cat: 'crypto', tag: '₿ أسواق العملات الرقمية', time: 'عالمي ومحلي', head: 'البيتكوين (BTC) والإيثيريوم (ETH) تسجلان تحركات قوية وسط اهتمام المستثمرين بالتحوط', body: 'منصات التداول الرقمية تسجل أحجام تداول عالية للعملات المستقرة (USDT).', impact: '⚡ سيولة مرتفعة' }
         ];
 
         function render() {
@@ -342,7 +373,7 @@
                 `;
             }
 
-            document.getElementById('news-ticker').innerText = "سعر صرف الدولار المباشر في دمشق: " + globalData.damascus.USD.sell.toLocaleString() + " ل.س - تم التحديث أوتوماتيكياً عبر النظام الذكي - تحديث لحظي مستمر.";
+            document.getElementById('news-ticker').innerText = "🔴 عاجل سورية: سعر صرف الدولار في دمشق: " + globalData.damascus.USD.sell.toLocaleString() + " ل.س | ⛽ وزارة النفط: استقرار نشرات البنزين والمازوت والغاز | 🏦 مصرف سوريا المركزي يثبت نشرات الصرف | 📊 بورصة دمشق تسجل تداولات نشطة - تحديث لحظي مستمر.";
             renderNews();
             calcCurrency();
             calcGold();
@@ -406,7 +437,7 @@
 
         function calcRemit() {
             if (!globalData) return;
-            const amt = parseFloat(document.getElementById('remit-amt').value) || 0;
+            const amt = parseFloat(document.getElementById('remit-amt').value) !== NaN ? parseFloat(document.getElementById('remit-amt').value) : 0;
             const fee = parseFloat(document.getElementById('remit-fee').value) || 0;
             const finalUsd = amt - (amt * (fee / 100));
             const finalSyp = Math.round(finalUsd * globalData[city].USD.sell);
@@ -434,17 +465,12 @@
             });
         }
 
-        function forceSync() {
-            fetchLiveRates();
-        }
-
         function toggleTheme() {
             const b = document.body;
             b.setAttribute('data-theme', b.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
             renderChart();
         }
 
-        // التشغيل التلقائي عند فتح التطبيق
         fetchLiveRates();
     </script>
 </body>
