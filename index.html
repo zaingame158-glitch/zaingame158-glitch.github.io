@@ -93,11 +93,14 @@
 
         .section-title { font-size: 13px; font-weight: 900; margin: 14px 0 6px; color: var(--primary); display: flex; align-items: center; gap: 4px; }
 
+        .gold-card { background: var(--gold-bg); border: 1px solid var(--gold-accent); }
+        .gold-card .currency-name { color: var(--gold); }
+
         .form-stack { display: flex; flex-direction: column; gap: 6px; }
         .input-group label { display: block; font-size: 10px; font-weight: 700; color: var(--text-muted); margin-bottom: 2px; }
         input, select { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-color); color: var(--text-main); font-size: 11px; font-weight: 700; outline: none; }
         
-        .result-box { background: var(--primary-light); color: var(--primary); padding: 8px; border-radius: 6px; text-align: center; font-weight: 900; font-size: 13px; border: 1px solid var(--primary); margin-top: 4px; }
+        .result-box { background: var(--primary-light); color: var(--primary); padding: 8px; border-radius: 6px; text-align: center; font-weight: 900; font-size: 12px; border: 1px solid var(--primary); margin-top: 4px; }
         .sub-result { font-size: 10px; font-weight: 700; margin-top: 2px; display: block; opacity: 0.9; }
 
         .archive-table { width: 100%; border-collapse: collapse; font-size: 10.5px; text-align: right; }
@@ -114,6 +117,7 @@
         .news-meta { display: flex; justify-content: space-between; font-size: 9px; font-weight: 800; color: var(--text-muted); }
         .news-headline { font-size: 11.5px; font-weight: 900; color: var(--text-main); line-height: 1.3; }
         .news-body { font-size: 10px; color: var(--text-muted); line-height: 1.4; font-weight: 600; }
+        .news-impact { font-size: 9px; font-weight: 800; padding: 3px 5px; border-radius: 4px; background: var(--bg-color); color: var(--text-main); border: 1px dashed var(--border); width: fit-content; }
 
         footer { background: var(--card-bg); border-top: 1px solid var(--border); margin-top: 20px; padding: 12px 8px; text-align: center; }
         .footer-links { display: flex; gap: 8px; justify-content: center; font-size: 10px; font-weight: 800; color: var(--gold); margin-bottom: 4px; }
@@ -161,6 +165,24 @@
         <div class="section-title">💱 أسعار العملات والمعادن</div>
         <div class="stack-list" id="rates-grid"></div>
 
+        <div class="section-title" style="color: var(--gold);">🪙 نشرة الذهب والفضة</div>
+        <div class="stack-list">
+            <div class="card gold-card">
+                <div class="card-header"><span class="currency-name">غرام عيار 21</span><span class="badge up">مبيع</span></div>
+                <div class="prices">
+                    <div class="price-box"><span>مبيع</span><strong>1,125,000</strong></div>
+                    <div class="price-box"><span>شراء</span><strong>1,120,000</strong></div>
+                </div>
+            </div>
+            <div class="card gold-card">
+                <div class="card-header"><span class="currency-name">غرام عيار 18</span><span class="badge up">مبيع</span></div>
+                <div class="prices">
+                    <div class="price-box"><span>مبيع</span><strong>964,000</strong></div>
+                    <div class="price-box"><span>شراء</span><strong>959,000</strong></div>
+                </div>
+            </div>
+        </div>
+
         <div class="section-title" style="color: var(--fuel);">⛽ نشرة المحروقات والغاز</div>
         <div class="stack-list">
             <div class="card">
@@ -201,13 +223,46 @@
             </div>
         </div>
 
-        <div class="section-title">🧮 حاسبة العملات والحوالات</div>
+        <!-- الحاسبات الشاملة -->
+        <div class="section-title">🧮 حاسبة العملات وعدد الأوراق</div>
         <div class="stack-list">
             <div class="card">
                 <div class="form-stack">
-                    <div class="input-group"><label>المبلغ</label><input type="number" id="amt" value="100" oninput="calc()"></div>
-                    <div class="input-group"><label>العملة</label><select id="cur" onchange="calc()"><option value="USD">دولار أمريكي</option><option value="USDT">تيثر (USDT)</option><option value="EUR">يورو</option><option value="TRY">ليرة تركية</option></select></div>
+                    <div class="input-group"><label>المبلغ</label><input type="number" id="amt" value="100" oninput="calcCurrency()"></div>
+                    <div class="input-group"><label>العملة</label><select id="cur" onchange="calcCurrency()"><option value="USD">دولار أمريكي</option><option value="USDT">تيثر (USDT)</option><option value="EUR">يورو</option><option value="TRY">ليرة تركية</option></select></div>
                     <div class="result-box" id="calc-res"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">🪙 حاسبة الذهب</div>
+        <div class="stack-list">
+            <div class="card">
+                <div class="form-stack">
+                    <div class="input-group"><label>عدد الغرامات</label><input type="number" id="gold-grams" value="10" oninput="calcGold()"></div>
+                    <div class="input-group"><label>العيار</label><select id="gold-karat" onchange="calcGold()"><option value="21">عيار 21 (1,125,000 ل.س)</option><option value="18">عيار 18 (964,000 ل.س)</option></select></div>
+                    <div class="result-box" id="gold-res" style="background: var(--gold-bg); color: var(--gold); border-color: var(--gold-accent);"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">☪️ حاسبة زكاة المال</div>
+        <div class="stack-list">
+            <div class="card">
+                <div class="form-stack">
+                    <div class="input-group"><label>إجمالي المدخرات ($ أو ما يعادلها)</label><input type="number" id="zakat-amt" value="5000" oninput="calcZakat()"></div>
+                    <div class="result-box" id="zakat-res" style="background: var(--crypto-bg); color: var(--crypto); border-color: var(--crypto);"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">💼 حاسبة الحوالات والعمولات التجارية</div>
+        <div class="stack-list">
+            <div class="card">
+                <div class="form-stack">
+                    <div class="input-group"><label>مبلغ الحوالة ($)</label><input type="number" id="remit-amt" value="1000" oninput="calcRemit()"></div>
+                    <div class="input-group"><label>نسبة العمولة (%)</label><input type="number" id="remit-fee" value="2.5" step="0.1" oninput="calcRemit()"></div>
+                    <div class="result-box" id="remit-res" style="background: var(--fuel-bg); color: var(--fuel); border-color: var(--fuel);"></div>
                 </div>
             </div>
         </div>
@@ -223,12 +278,15 @@
             </table>
         </div>
 
-        <div class="section-title">📰 الأخبار والتحليلات المالية</div>
+        <!-- قسم الأخبار والتحليلات المالية الشامل (بعد أرشيف الأسعار مباشرة) -->
+        <div class="section-title" style="color: var(--primary);">📰 الأخبار والتحليلات المالية العالمية والمحلية</div>
         <div class="news-filters">
             <button class="filter-btn active" onclick="filterNews('all', this)">الكل</button>
-            <button class="filter-btn" onclick="filterNews('crypto', this)">الكريبتو</button>
-            <button class="filter-btn" onclick="filterNews('treasury', this)">الخزينة</button>
-            <button class="filter-btn" onclick="filterNews('oil', this)">النفط</button>
+            <button class="filter-btn" onclick="filterNews('syria', this)">🇸🇾 سوريا والبورصة</button>
+            <button class="filter-btn" onclick="filterNews('crypto', this)">₿ البيتكوين والمنصات</button>
+            <button class="filter-btn" onclick="filterNews('treasury', this)">🏛️ الخزينة والدولار</button>
+            <button class="filter-btn" onclick="filterNews('oil', this)">🛢️ النفط والحروب</button>
+            <button class="filter-btn" onclick="filterNews('banks', this)">🏦 المصارف والأسواق</button>
         </div>
         <div id="news-container"></div>
     </div>
@@ -254,9 +312,54 @@
         };
 
         const newsList = [
-            { cat: 'crypto', tag: 'البيتكوين', time: 'مباشر', head: 'البيتكوين يختبر مستويات قوية وسط ترقب الأسواق', body: 'حركة تذبذب ملحوظة في أسواق الكريبتو وصناديق الاستثمار المتداولة.' },
-            { cat: 'treasury', tag: 'الخزينة الأمريكية', time: 'اقتصاد', head: 'مؤشر الدولار يتجاوز 103 نقاط وعوائد السندات ترتفع', body: 'بيانات الفائدة والتضخم تؤثر مباشرة على العملات العالمية.' },
-            { cat: 'oil', tag: 'النفط والحروب', time: 'طاقة', head: 'خام برنت يستقر قرب مستويات مرتفعة وسط التوترات', body: 'متابعة حثيثة لخطوط الإمداد وحصص الإنتاج العالمية.' }
+            {
+                cat: 'syria',
+                tag: '🇸🇾 بورصة دمشق والأسواق المحلية',
+                time: 'مباشر',
+                head: 'سوق دمشق للأوراق المالية تسجل أحجام تداول نشطة وسط إقبال على الأسهم القيادية والمصارف',
+                body: 'متابعة حثيثة لأداء الشركات المدرجة، وسط ترقب لإفصاحات البيانات المالية الفصلية وتأثيرها على السيولة النقدية بالسوق المحلي.',
+                impact: '📊 استقرار وتداولات إيجابية'
+            },
+            {
+                cat: 'syria',
+                tag: '🇸🇾 مصرف سوريا المركزي',
+                time: 'رسمي',
+                head: 'تثبيت نشرة الحوالات والتمويل وضبط إيقاع السوق الموازية للقطع الأجنبي',
+                body: 'مصرف سوريا المركزي يواصل مراقبة قنوات صرف الحوالات الخارجية، وتوفير التمويل اللازم للمستوردات الأساسية والقطاع الصناعي.',
+                impact: '💵 دعم استقرار الصرف'
+            },
+            {
+                cat: 'crypto',
+                tag: '₿ البيتكوين والعملات الرقمية',
+                time: 'تحليل عالمي',
+                head: 'البيتكوين يختبر مستويات حرجة وسط تدفقات مؤسسية قوية على صناديق المؤشرات (ETFs)',
+                body: 'منصات التداول العالمية الكبرى مثل Binance تسجل أحجام تداول قياسية على عقود الـ USDT والبيتكوين، مع ترقب قرارات الفيدرالي الأمريكي بشأن السيولة.',
+                impact: '⚡ تقلبات عالية السيولة'
+            },
+            {
+                cat: 'treasury',
+                tag: '🏛️ الخزينة الأمريكية والدولار',
+                time: 'اقتصاد كلي',
+                head: 'عوائد سندات الخزينة الأمريكية لأجل 10 سنوات تؤثر مباشرة على مؤشر الدولار (DXY)',
+                body: 'الأسواق العالمية تترقب بيانات التضخم والوظائف الأمريكية التي تحدد مسار أسعار الفائدة، مما ينعكس بشكل مباشر على قوة الدولار أمام العملات الرئيسية.',
+                impact: '📈 ضغط صعودي على الدولار'
+            },
+            {
+                cat: 'oil',
+                tag: '🛢️ النفط، الحروب والاستيراد والتصدير',
+                time: 'طاقة وجيوسياسة',
+                head: 'خام برنت يتأثر بالتوترات الجيوسياسية في خطوط الملاحة ومسارات الشحن البحري للنفط',
+                body: 'الصراعات والحروب الإقليمية ترفع تكاليف التأمين البحري وشحن البضائع، مما ينعكس بظلاله على تكاليف الاستيراد العالمية وأسعار الطاقة والمحروقات.',
+                impact: '🔥 ارتفاع تكاليف التوريد'
+            },
+            {
+                cat: 'banks',
+                tag: '🏦 المصارف المحلية والعربية',
+                time: 'قطاع مصرفي',
+                head: 'حراك مصرفي عربي ومحلي لتعزيز شبكات المراسلات وتسهيل تمويل التجارة البينية',
+                body: 'المصارف العاملة في سوريا تعمل على تحديث أنظمة الدفع الإلكتروني وتوسيع مظلة التسهيلات الائتمانية للمشاريع الصغيرة والمتوسطة.',
+                impact: '💳 تطوير خدمات الدفع'
+            }
         ];
 
         function render() {
@@ -277,9 +380,12 @@
                 `;
             }
 
-            document.getElementById('news-ticker').innerText = "سعر صرف الدولار في دمشق: " + data.damascus.USD.sell.toLocaleString() + " ل.س - نشرة مصرف سوريا المركزي مستقرة - متابعة الأسواق العالمية والذهب لحظياً.";
+            document.getElementById('news-ticker').innerText = "سعر صرف الدولار في دمشق: " + data.damascus.USD.sell.toLocaleString() + " ل.س - نشرة مصرف سوريا المركزي مستقرة - متابعة أسواق النفط، الذهب، والبورصات العالمية لحظياً.";
             renderNews();
-            calc();
+            calcCurrency();
+            calcGold();
+            calcZakat();
+            calcRemit();
             renderChart();
             renderArchive();
         }
@@ -292,6 +398,7 @@
                     <div class="news-meta"><span>${n.tag}</span><span>${n.time}</span></div>
                     <div class="news-headline">${n.head}</div>
                     <div class="news-body">${n.body}</div>
+                    <div class="news-impact">${n.impact}</div>
                 </div>
             `).join('');
         }
@@ -310,12 +417,35 @@
             render();
         }
 
-        function calc() {
+        function calcCurrency() {
             const amt = parseFloat(document.getElementById('amt').value) || 0;
             const cur = document.getElementById('cur').value;
             const rate = cur === 'USDT' ? 14800 : data[city][cur].sell;
             const total = amt * rate;
             document.getElementById('calc-res').innerHTML = `${total.toLocaleString()} ل.س<span class="sub-result">الورق (فئة 5000): ${Math.ceil(total/5000)} ورقة</span>`;
+        }
+
+        function calcGold() {
+            const grams = parseFloat(document.getElementById('gold-grams').value) || 0;
+            const karat = document.getElementById('gold-karat').value;
+            const pricePerGram = karat === '21' ? 1125000 : 964000;
+            const total = grams * pricePerGram;
+            document.getElementById('gold-res').innerHTML = `القيمة الإجمالية: ${total.toLocaleString()} ل.س`;
+        }
+
+        function calcZakat() {
+            const amt = parseFloat(document.getElementById('zakat-amt').value) || 0;
+            const zakatUsd = amt * 0.025;
+            const zakatSyp = Math.round(zakatUsd * data[city].USD.sell);
+            document.getElementById('zakat-res').innerHTML = `مقدار الزكاة (2.5%): $${zakatUsd.toLocaleString()} (${zakatSyp.toLocaleString()} ل.س)`;
+        }
+
+        function calcRemit() {
+            const amt = parseFloat(document.getElementById('remit-amt').value) || 0;
+            const fee = parseFloat(document.getElementById('remit-fee').value) || 0;
+            const finalUsd = amt - (amt * (fee / 100));
+            const finalSyp = Math.round(finalUsd * data[city].USD.sell);
+            document.getElementById('remit-res').innerHTML = `الصافي: $${finalUsd.toLocaleString()} (${finalSyp.toLocaleString()} ل.س)`;
         }
 
         function renderArchive() {
